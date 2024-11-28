@@ -2,8 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
+*.key
 
 /.quarto/
+drafts/
 
 _site/
 

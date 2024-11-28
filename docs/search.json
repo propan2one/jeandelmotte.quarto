@@ -9,22 +9,64 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Posts",
+    "title": "Home",
     "section": "",
-    "text": "Post With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nNov 21, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nNov 18, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "Hello, I’m Jean DELMOTTE biologist by training, computational biologist by profession, educator and scientist at heart. At the interface of data science, biology, and, computer science."
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "Hello, I am Jean DELMOTTE biologist by training, computational biologist by profession, educator and scientist at heart. At the interface of data science, biology, and, computer science."
+    "text": "Coming from a multidisciplinary background mixing biochemistry, microbiology, immunology and bioinformatics, I’m now a Bioinformatician researcher at Sanofi. My work focuses on creating complex bioinformatics analysis for the pharmaceutical industry.\n\n\nUniversity of Montpellier, Montpellier | France, Fr PhD in Bioinformatics | Oct. 2017 - Apr. 2021\nUniversité de Paris, Paris | France, Fr MASTER in Immunology Sep. 2015 - Jun. 2017\nUniversité de Paris, Paris | France, Fr B.S. in Biochemistry Bioinformatics Biology Sep. 2014 - Jun. 2015\nUniversity of Toulon Toulon | France, Fr University degree in technology Sep. 2012 - Jun. 2014"
   },
   {
     "objectID": "posts/post-with-code/index.html",
     "href": "posts/post-with-code/index.html",
     "title": "Post With Code",
     "section": "",
-    "text": "This is a post with executable code."
+    "text": "This is a post with executable code. And this is a link\n\n writeLines(\"adaz\")\n\nadaz"
+  },
+  {
+    "objectID": "contact.html",
+    "href": "contact.html",
+    "title": "Contact",
+    "section": "",
+    "text": "If you have any problem that I can help you with, I would be glad to help"
+  },
+  {
+    "objectID": "homing.html",
+    "href": "homing.html",
+    "title": "About",
+    "section": "",
+    "text": "Hello, I am Jean DELMOTTE biologist by training, computational biologist by profession, educator and scientist at heart. At the interface of data science, biology, and, computer science."
+  },
+  {
+    "objectID": "homepage.html",
+    "href": "homepage.html",
+    "title": "Posts",
+    "section": "",
+    "text": "Post With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nNov 21, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nNov 18, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "docs/main.html",
+    "href": "docs/main.html",
+    "title": "About",
+    "section": "",
+    "text": "Hello, I am Jean DELMOTTE biologist by training, computational biologist by profession, educator and scientist at heart. At the interface of data science, biology, and, computer science."
+  },
+  {
+    "objectID": "contact.html#contact-me",
+    "href": "contact.html#contact-me",
+    "title": "Contact",
+    "section": "",
+    "text": "If you have any problem that I can help you with, I would be glad to help"
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "About",
+    "section": "",
+    "text": "University of Montpellier, Montpellier | France, Fr PhD in Bioinformatics | Oct. 2017 - Apr. 2021\nUniversité de Paris, Paris | France, Fr MASTER in Immunology Sep. 2015 - Jun. 2017\nUniversité de Paris, Paris | France, Fr B.S. in Biochemistry Bioinformatics Biology Sep. 2014 - Jun. 2015\nUniversity of Toulon Toulon | France, Fr University degree in technology Sep. 2012 - Jun. 2014"
   }
 ]

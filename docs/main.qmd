@@ -1,5 +1,5 @@
 ---
-title: "Home"
+title: "About"
 image: author.jpg
 about:
   template: jolla
@@ -19,4 +19,4 @@ about:
 
 ---
 
-Hello, I'm Jean DELMOTTE biologist by training, computational biologist by profession, educator and scientist at heart. At the interface of data science, biology, and, computer science. 
+Hello, I am Jean DELMOTTE biologist by training, computational biologist by profession, educator and scientist at heart. At the interface of data science, biology, and, computer science. 
