@@ -21,18 +21,18 @@ about:
 
 Coming from a multidisciplinary background mixing biochemistry, microbiology, immunology and bioinformatics, I'm now a Bioinformatician researcher at [Sanofi](https://www.sanofi.com/en). My work focuses on creating complex bioinformatics analysis for the pharmaceutical industry.
 
-In this blog I study the scientific fields that interest me (pangenomics, data workflows and pipelines..). I also talk about my feelings in the pharmaceutical environment after my career in academia, and I express opinions that are my own and commit only myself.
+In this blog I study the scientific fields that interest me (*pangenomics*, *data workflows* and *bioinformatics pipelines*..). I also talk about my feelings in the pharmaceutical environment after my career in academia, and I express opinions that are my own and commit only myself.
 
 ## Education
 
 - [University of Montpellier](https://www.umontpellier.fr/university-of-montpellier), Montpellier | France, Fr
-Ph.D in Bioinformatics | Oct. 2017 - Apr. 2021
+**Ph.D in Bioinformatics** | Oct. 2017 - Apr. 2021
 
 - [Université de Paris](https://u-paris.fr/en/universite-paris-cite/), Paris | France, Fr
-Master degree in Immunology Sep. 2015 - Jun. 2017
+**Master degree** in Immunology Sep. 2015 - Jun. 2017
 
 - [Université de Paris](https://u-paris.fr/en/universite-paris-cite/), Paris | France, Fr
-B.S. in Biochemistry Bioinformatics Biology Sep. 2014 - Jun. 2015
+**B.S. degree** in Biochemistry Bioinformatics Biology Sep. 2014 - Jun. 2015
 
 - [University of Toulon](https://www.univ-tln.fr/-University-of-Toulon-.html), Toulon | France, Fr
-University degree in technology Sep. 2012 - Jun. 2014
+**University degree** in technology Sep. 2012 - Jun. 2014

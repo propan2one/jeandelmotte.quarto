@@ -1,6 +1,6 @@
 ---
 title: "Contact"
-image: author.jpg
+image: thumbnail.jpg
 about:
   template: broadside
   links:
@@ -20,3 +20,5 @@ about:
 ---
 
 If you have any problem that I can help you with, I would be glad to help!
+
+The best way to reach me is to send me a message on [Mastodon](https://genomic.social/@jeandelmotte) or [twitter/X](https://twitter.com/DrStagiaire)
