@@ -18,14 +18,14 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "Coming from a multidisciplinary background mixing biochemistry, microbiology, immunology and bioinformatics, I’m now a Bioinformatician researcher at Sanofi. My work focuses on creating complex bioinformatics analysis for the pharmaceutical industry.\n\n\nUniversity of Montpellier, Montpellier | France, Fr PhD in Bioinformatics | Oct. 2017 - Apr. 2021\nUniversité de Paris, Paris | France, Fr MASTER in Immunology Sep. 2015 - Jun. 2017\nUniversité de Paris, Paris | France, Fr B.S. in Biochemistry Bioinformatics Biology Sep. 2014 - Jun. 2015\nUniversity of Toulon Toulon | France, Fr University degree in technology Sep. 2012 - Jun. 2014"
+    "text": "Coming from a multidisciplinary background mixing biochemistry, microbiology, immunology and bioinformatics, I’m now a Bioinformatician researcher at Sanofi. My work focuses on creating complex bioinformatics analysis for the pharmaceutical industry.\nIn this blog I study the scientific fields that interest me (pangenomics, data workflows and pipelines..). I also talk about my feelings in the pharmaceutical environment after my career in academia, and I express opinions that are my own and commit only myself."
   },
   {
     "objectID": "posts/post-with-code/index.html",
     "href": "posts/post-with-code/index.html",
-    "title": "Post With Code",
+    "title": "The evolution of bioinformatics analysis workflows",
     "section": "",
-    "text": "This is a post with executable code. And this is a link\n\n writeLines(\"adaz\")\n\nadaz"
+    "text": "Today, the volume of data to be analysed in bioinformatics is such that it’s essential to use a number of tools to produce results in a consistent timeframe. However, these advances are not always used, so let’s take a look back at the history of analysis methods over the last 10 years.\n\n\nTo fully understand what these modalities refer to, II need to introduce you to the notion that I call the different generations, often speaking of the Generation I, II or III pipeline (abbreviated as GI, GII etc..). Of course, defined limits are not so clearly defined, and often generations of tools coexist within a lab or organization.\n\nGeneration 0\nLet’s start with an era I’ve never known (I’ve only been doing bioinfo for 7 years), which includes the beginnings of bioinformatics. Here I call the tools used generation 0."
   },
   {
     "objectID": "contact.html",
@@ -46,7 +46,7 @@
     "href": "homepage.html",
     "title": "Posts",
     "section": "",
-    "text": "Post With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nNov 21, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nNov 18, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "The evolution of bioinformatics analysis workflows\n\n\n\n\n\n\nOpinion\n\n\nBioinformatics\n\n\nWorkflow managers\n\n\n\n\n\n\n\n\n\nNov 21, 2024\n\n\nJean DELMOTTE\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nNov 18, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "docs/main.html",
@@ -66,7 +66,14 @@
     "objectID": "about.html#education",
     "href": "about.html#education",
     "title": "About",
+    "section": "Education",
+    "text": "Education\nUniversity of Montpellier, Montpellier | France, Fr PhD in Bioinformatics | Oct. 2017 - Apr. 2021\nUniversité de Paris, Paris | France, Fr MASTER in Immunology Sep. 2015 - Jun. 2017\nUniversité de Paris, Paris | France, Fr B.S. in Biochemistry Bioinformatics Biology Sep. 2014 - Jun. 2015\nUniversity of Toulon, Toulon | France, Fr University degree in technology Sep. 2012 - Jun. 2014"
+  },
+  {
+    "objectID": "posts/post-with-code/index.html#context",
+    "href": "posts/post-with-code/index.html#context",
+    "title": "The evolution of bioinformatics analysis workflows",
     "section": "",
-    "text": "University of Montpellier, Montpellier | France, Fr PhD in Bioinformatics | Oct. 2017 - Apr. 2021\nUniversité de Paris, Paris | France, Fr MASTER in Immunology Sep. 2015 - Jun. 2017\nUniversité de Paris, Paris | France, Fr B.S. in Biochemistry Bioinformatics Biology Sep. 2014 - Jun. 2015\nUniversity of Toulon Toulon | France, Fr University degree in technology Sep. 2012 - Jun. 2014"
+    "text": "Today, the volume of data to be analysed in bioinformatics is such that it’ss essential to use a number of tools to produce results in a consistent timeframe. However, these advances are not always used, so let’s take a look back at the history of analysis methods over the last 10 years.\n\n\nTo fully understand what these modalities refer to, I need to introduce the notion of generation. Of course, defined limits are not so clearly defined, and often generations of tools coexist within a lab or organization.\n\n\nLet’s start with a period I didn’t experience, which includes the beginnings of bioinformatics. Here I call the tools used generation 0"
   }
 ]
