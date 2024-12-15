@@ -3,7 +3,8 @@ project:
   output-dir: docs
 
 website:
-  title: "jeandelmotte.com"
+  title: "Jean Delmotte"
+  site-url : "https://jeandelmotte.com"
   favicon: logo.png
   page-navigation: true
   navbar:

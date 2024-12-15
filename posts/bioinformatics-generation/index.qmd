@@ -59,9 +59,7 @@ The limitation of these generation two pipelines is that *i)* since the analyses
 
 ### Generation III
 
-That's where Generation III pipelines come in by using the **W**orkflow **M**anagement **S**ystems (**WfMS**) ([Ahmed et al. 2021](10.1038/s41598-021-99288-8)). From my point of view, it's literally a **language for parallelizing**, and in the case of bioinformatics analysis, it's very powerful. You're probably familiar with WfMS languages such as [Snakemake](https://snakemake.readthedocs.io/en/stable/), [Nextflow](https://www.nextflow.io/docs/latest/index.html), [CWL](https://www.commonwl.org/), [Airflow](https://airflow.apache.org/) and [WDL](https://openwdl.org/) etc.. 
-.
-
+That's where Generation III pipelines come in by using the **W**orkflow **M**anagement **S**ystems (**WfMS**) ([Ahmed et al. 2021](10.1038/s41598-021-99288-8)). From my point of view, it's literally a **language for parallelizing task**. In the case of bioinformatics analysis it's very powerful because you sahre the computing power between samples and process, can trigger several comportement for autoscaling pipeline and more. You're probably familiar with WfMS languages such as [Snakemake](https://snakemake.readthedocs.io/en/stable/), [Nextflow](https://www.nextflow.io/docs/latest/index.html), [CWL](https://www.commonwl.org/), [Airflow](https://airflow.apache.org/) and [WDL](https://openwdl.org/) etc.. 
 
 
 When coupled with a launch interface ([ShinyApp](https://www.shinyapps.io/), [Streamlit](https://streamlit.io/) or even better an [EPAM Cloud Pipeline](https://lifescience.opensource.epam.com/cloud/) infra) and an academic or cloud server, it allows you to run all available bioinfo tools.
