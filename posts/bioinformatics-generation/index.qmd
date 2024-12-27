@@ -5,6 +5,12 @@ date: "2024-11-21"
 categories: [Opinion, Bioinformatics, Workflow managers]
 ---
 
+<style>
+body {
+text-align: justify}
+</style>
+
+
 ::: columns
 
 ::: {.column width="30%"}
@@ -39,7 +45,7 @@ Together, *Generation I* (GI) tools/pipelines are sufficient for small datasets,
 
 ::: {.column width="65%"}
 
-What I call *Generation II* (GII) pipelines are everything that comes close to bash-coded pipelines. When coupled with a launch interface and an academic or cloud server, it allows you to run all available bioinfo tools. We're not going to lie, we've all done it, it's ugly, but it works and sometimes it allows you to go fast (for a POC or whatever). Sometimes it's an analysis in Python or R, but the idea remains the same: it's a script (often monolithic) that chains together the analysis tools. You'll often find conda environment calls directly in the code or singularity image to manage the bioinformatics sofware. Most of the time, it's the bioinformatician who developed it who launches it for his analyses, but sometimes with the use of an app (a feature of GIII) allows the pipeline to be transmitted to several users, including biologists. Here the constraint is to provide the user with a consistent interface (asking the user to modify a YAML can sometimes be problematic for the user).
+What I call *Generation II* (GII) pipelines are everything that comes close to bash-coded pipelines. When coupled with a launch interface and an academic or cloud server, it allows you to run all available bioinfo tools. We're not going to lie, we've all done it, it's ugly, but it works and sometimes it allows you to go fast (for a POC or whatever). Sometimes it's an analysis in Python or R, but the idea remains the same: it's a script (often monolithic) that chains together the analysis tools (Fig.1.). You'll often find conda environment calls directly in the code or singularity image to manage the bioinformatics sofware. Most of the time, it's the bioinformatician who developed it who launches it for his analyses, but sometimes with the use of an app (a feature of GIII) allows the pipeline to be transmitted to several users, including biologists. Here the constraint is to provide the user with a consistent interface (asking the user to modify a YAML can sometimes be problematic for the user).
 
 :::
 
@@ -48,7 +54,7 @@ What I call *Generation II* (GII) pipelines are everything that comes close to b
 :::
 
 ::: {.column width="30%"}
-![One script to rule them all](GII_pipeline_example.png)
+![Fig.1. One script to rule them all](GII_pipeline_example.png)
 :::
 
 :::
