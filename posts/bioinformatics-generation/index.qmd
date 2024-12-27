@@ -10,15 +10,14 @@ body {
 text-align: justify}
 </style>
 
-
 ::: columns
 
-::: {.column width="30%"}
+::: {.column width="38%"}
 
 ![](IA_postprod_image.jpg)
 :::
 
-::: {.column width="10%"}
+::: {.column width="2%"}
 
 :::
 
@@ -69,5 +68,7 @@ That's where Generation III pipelines come in by using the **W**orkflow **M**ana
 
 
 When coupled with a launch interface ([ShinyApp](https://www.shinyapps.io/), [Streamlit](https://streamlit.io/) or even better an [EPAM Cloud Pipeline](https://lifescience.opensource.epam.com/cloud/) infra) and an academic or cloud server, it allows you to run all available bioinfo tools.
+
+To be continue...
 
 <script style="text-align:center" type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="propan2one" data-color="#3b0579" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#ffffff" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>

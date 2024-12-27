@@ -1,0 +1,80 @@
+---
+title: "Synthetic data generation"
+author: "Jean DELMOTTE"
+date: "2024-12-27"
+categories: [Bioinformatics, Synthetic, Python]
+---
+
+<style>
+body {
+text-align: justify}
+</style>
+
+::: columns
+
+::: {.column width="38%"}
+
+![Image from TheOrsna in Pixabay](cat-7737618_640.jpg)
+:::
+
+::: {.column width="2%"}
+
+:::
+
+::: {.column width="60%"}
+One of the most cost-effective things bioinformatics can do is to simulate giving. These simulations are an underestimated research tool. We often simulate data to benchmark different algorithms or to perform unit tests on our analysis pipelines. From my personal point of view, it's possible to go further: if we understand a biological problem, then we should be able to simulate data. If the entire problem is correctly understood, then the analysis of simulated and experimental data should lead to the same conclusion. This validates that the mechanism is well understood.
+:::
+
+:::
+
+In this post, I'll describe how to create a small synthetic genomes, assign mutations to it and simulate mutations at different frequencies. The aim is to create a minimal dataset to facilitate unit testing of my pipelines.
+
+### Creation of a synthetic genomes
+
+There are many ways of doing this. When working on a single model, it's best to start with the genome of interest and introduce mutations. If, on the other hand, you want something completly artificial, you can generate a sequence with a probability of 0.25 for each letter (A, T, C and G). A lot of tools exist, 
+like [random_dna](https://www.bioinformatics.org/sms2/random_dna.html) from Sequence Manipulation Suit, all bioinformatics libraries, makenucseq from [EMBOSS](https://doi.org/10.1016/S0168-9525(00)02024-2).. But a long time ago I made a very basic package [inSilicoGenome](https://github.com/propan2one/inSilicoGenome) which allows you to generate sequences and mutations, I'm going to use it. As this project never came to a conclusion, I'm going to take this opportunity to show you what not to do, while still managing to get the code to work without using the pip command.
+
+- Get the code first, install a correct envs in a linux terminal having conda/mamba
+
+```bash
+# 1) Clone the repo 
+git clone git@github.com:propan2one/inSilicoGenome.git
+ 
+# 2) create a conda env where all tools work together
+#    in my case, for ease of use, I'm going to use biopython
+conda create -y -p ~/envs/insilicogenome \
+    --channel conda-forge python=3.11.11 biopython 
+conda activate ~/envs/insilicogenome
+```
+
+- Then use python's dedicated functions to create the sequences corresponding to the different haplotypes
+
+```python
+# 3) Import function available in the package
+import sys
+sys.path.append('inSilicoGenome')
+from src.insilicogenome import insilicogenome
+from src.insilicogenome import insilicodata
+
+# 4) Declare all variables
+size = 5000
+output = "haplo_01.fasta"
+range_start=10
+range_end=4500
+
+# 5) Make a reference sequence
+sequence = insilicogenome.random_dnasequence(size)
+insilicogenome.write_fasta_genome(output, sequence, description = '0.8')
+
+# 6) Make a haplotype
+vcf = insilicodata.generate_table_small_variation(output, range_start=range_start, range_end=range_end)
+insilicodata.create_variants(output, vcf, range_start=range_start, range_end=range_end)
+```
+
+Once you've created the second haplotype, you should have a new fasta sequence and a pseudo VCF that keeps track of all the variations. So with the `generate_table_small_variation` function you'll have, taking the reference: a small insertion and deletion of one base, an insertion and deletion of 5 bases, 1 SNV and 1 MNV broken down into 5 SNVs making a total of 6 variations.
+
+### Simulation of Illumina data for both haplotypes
+
+To be continue...
+
+<script style="text-align:center" type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="propan2one" data-color="#3b0579" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#ffffff" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
