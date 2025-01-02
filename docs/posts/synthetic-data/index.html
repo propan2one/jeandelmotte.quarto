@@ -176,6 +176,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
                                 <div class="quarto-categories">
                 <div class="quarto-category">Bioinformatics</div>
                 <div class="quarto-category">Synthetic</div>
+                <div class="quarto-category">Simulation</div>
                 <div class="quarto-category">Python</div>
               </div>
                   </div>
@@ -244,35 +245,101 @@ text-align: justify}
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) create a conda env where all tools work together</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#    in my case, for ease of use, I'm going to use biopython</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-y</span> <span class="at">-p</span> ~/envs/insilicogenome <span class="dt">\</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">--channel</span> conda-forge python=3.11.11 biopython </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate ~/envs/insilicogenome</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">--channel</span> conda-forge python=3.11.11 Poetry</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate ~/envs/insilicogenome</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>Then use python’s dedicated functions to create the sequences corresponding to the different haplotypes</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3) Import function available in the package</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'inSilicoGenome'</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> src.insilicogenome <span class="im">import</span> insilicogenome</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> src.insilicogenome <span class="im">import</span> insilicodata</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 4) Declare all variables</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>size <span class="op">=</span> <span class="dv">5000</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> <span class="st">"haplo_01.fasta"</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>range_start<span class="op">=</span><span class="dv">10</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>range_end<span class="op">=</span><span class="dv">4500</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 5) Make a reference sequence</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>sequence <span class="op">=</span> insilicogenome.random_dnasequence(size)</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>insilicogenome.write_fasta_genome(output, sequence, description <span class="op">=</span> <span class="st">'0.8'</span>)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 6) Make a haplotype</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>vcf <span class="op">=</span> insilicodata.generate_table_small_variation(output, range_start<span class="op">=</span>range_start, range_end<span class="op">=</span>range_end)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>insilicodata.create_variants(output, vcf, range_start<span class="op">=</span>range_start, range_end<span class="op">=</span>range_end)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In python --------------------------------------------------------------------</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 3) Import function available in the package</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> insilicogenome <span class="im">import</span> insilicogenome</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> insilicogenome <span class="im">import</span> insilicodata</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 4) Declare all variables</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>size <span class="op">=</span> <span class="dv">5000</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> <span class="st">"haplo_01.fasta"</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>range_start<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>range_end<span class="op">=</span><span class="dv">4500</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 5) Make a reference sequence</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>sequence <span class="op">=</span> insilicogenome.random_dnasequence(size)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>insilicogenome.write_fasta_genome(output, sequence, description <span class="op">=</span> <span class="st">'0.8'</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 6) Make a haplotype</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>vcf <span class="op">=</span> insilicodata.generate_table_small_variation(output,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    range_start<span class="op">=</span>range_start, range_end<span class="op">=</span>range_end)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>insilicodata.create_variants(output, vcf, </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    range_start<span class="op">=</span>range_start, range_end<span class="op">=</span>range_end)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Once you’ve created the second haplotype, you should have a new fasta sequence and a pseudo VCF that keeps track of all the variations. So with the <code>generate_table_small_variation</code> function you’ll have, taking the reference: a small insertion and deletion of one base, an insertion and deletion of 5 bases, 1 SNV and 1 MNV broken down into 5 SNVs making a total of 6 variations.</p>
+<section id="verification-of-variation-present-in-the-two-haplotypes" class="level4">
+<h4 class="anchored" data-anchor-id="verification-of-variation-present-in-the-two-haplotypes">Verification of variation present in the two haplotypes</h4>
+<p>A very quick way to check that all variations are present between the two FASTAs is to use <a href="https://www.ebi.ac.uk/jdispatcher/psa/emboss_needle">Needle</a> from <a href="https://www.ebi.ac.uk/jdispatcher/">EMBOSS</a> to perform a pairwise alignment. As you can see, there is 99.6% of identity between the two sequence.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># haplo_01  916 .   T   A   45  PASS    1SNP -----------------------------------</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">haplo_01</span>         901 ACGCACTATACTTGATAATGGCTGCCGCAGGCGCCGAGCCTTAGGAGTTG    950</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                     <span class="kw">|||||||||||||||</span><span class="bu">.</span><span class="kw">||||||||||||||||||||||||||||||||||</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">haplo_01_10_4</span>    901 ACGCACTATACTTGAAAATGGCTGCCGCAGGCGCCGAGCCTTAGGAGTTG    950</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># haplo_01  1967    .   CG  C   45  PASS    small_DEL</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># haplo_01  1992    .   AAATCT  A   45  PASS    DEL ----------------------------</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">haplo_01</span>        1951 TCGCTTTTGCGGTCCGCGAACGTCATCCCCGACCAGGTGGTAAATCTGTC   2000</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                     <span class="kw">|||||||||||||||||</span> <span class="kw">||||||||||||||||||||||||</span>     <span class="kw">|||</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="ex">haplo_01_10_4</span>   1951 TCGCTTTTGCGGTCCGC-AACGTCATCCCCGACCAGGTGGTA-----GTC   1994</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># haplo_01  2925    .   T   TAGTGA  45  PASS    INS ----------------------------</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="ex">haplo_01</span>        2901 GGCGAGTTTGTTGGGATATTGATAT-----CCGGACTAGACCCTTAACAC   2945</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                     <span class="kw">|||||||||||||||||||||||||</span>     <span class="kw">||||||||||||||||||||</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="ex">haplo_01_10_4</span>   2895 GGCGAGTTTGTTGGGATATTGATATAGTGACCGGACTAGACCCTTAACAC   2944</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># haplo_01  3123    .   A   AC  45  PASS    small_INS --------------------------</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="ex">haplo_01</span>        3096 ATAATTCGTGCCTCGAATATCGCTCGCA-CGCGCGCGTATTCGGGAGCAA   3144</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                     <span class="kw">||||||||||||||||||||||||||||</span> <span class="kw">|||||||||||||||||||||</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="ex">haplo_01_10_4</span>   3095 ATAATTCGTGCCTCGAATATCGCTCGCACCGCGCGCGTATTCGGGAGCAA   3144</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co"># haplo_01  3977    .   GCAGTT  GGGCCA  45  PASS    5MNP -----------------------</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="ex">haplo_01</span>        3945 TCCCTGTTCCCAATTCCAGCACGCCCGTCTTTGCAGTTAGATACCTGATT   3994</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                     <span class="kw">|||||||||||||||||||||||||||||||||</span><span class="ex">.....</span><span class="kw">||||||||||||</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="ex">haplo_01_10_4</span>   3945 TCCCTGTTCCCAATTCCAGCACGCCCGTCTTTGGGCCAAGATACCTGATT   3994</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 </section>
 <section id="simulation-of-illumina-data-for-both-haplotypes" class="level3">
 <h3 class="anchored" data-anchor-id="simulation-of-illumina-data-for-both-haplotypes">Simulation of Illumina data for both haplotypes</h3>
-<p>To be continue…</p>
+<p>To generate the illumina sequencing data, I’ll use <a href="https://github.com/HadrienG/InSilicoSeq">InSilicoSeq</a> but other alternative existe, like <a href="https://manpages.debian.org/testing/art-nextgen-simulation-tools/art_illumina.1.en.html">art_illumina</a> or <a href="https://github.com/lh3/wgsim">wgsim</a>. To mimic the presence of two haplotypes in my dataset, I’ll use the relative abundance of the two fasta files previously generated. This way I can ensure that the allelic frequencies of each variation are well defined. This is a simple example, but in theory it’s possible to design more complex phenomena by creating multiple haplotypes of the same genome (perhaps we’ll explore this later).</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) Installation of insilicoseq -----------------------------------------------</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-y</span> <span class="at">-p</span> ~/envs/insilicoseq <span class="dt">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--channel</span> bioconda <span class="at">--channel</span> conda-forge insilicoseq biopython <span class="dt">\</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    pysam scipy future joblib</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-y</span> <span class="at">-p</span> ~/envs/insilicoseq <span class="dt">\</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">--channel</span> conda-forge <span class="at">--channel</span> bioconda insilicoseq=2.0.1</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate ~/envs/insilicoseq</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) Generate the abundance file -----------------------------------------------</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> haplo<span class="pp">*</span>.fasta <span class="op">&gt;&gt;</span> haplotypes.fna <span class="co"># Combine the FASTA files</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-e</span> <span class="st">"&gt;"</span> haplotypes.fna  <span class="kw">|</span> <span class="fu">sed</span> <span class="st">"s/&gt;//g"</span> <span class="op">&gt;&gt;</span> abundance.txt</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/_variant/_variant\t0.2/g"</span> abundance.txt <span class="co"># AF of 0.2 for haplotype 2</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/ /\t/g"</span> abundance.txt <span class="co"># Correct the space introduce from 'write_fasta_genome'</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 3) Simulate the reads (125) --------------------------------------------------</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   Because FASTA is ~5k nt and we want to genrate 50X cov, we want 250k</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#   nucleotides. So it's ~2000 paired reads </span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="ex">iss</span> generate <span class="at">--cpus</span> 4 <span class="at">-g</span> haplotypes.fna <span class="at">--abundance_file</span> abundance.txt <span class="dt">\</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">-m</span> HiSeq <span class="at">--n_reads</span> 2k <span class="at">--compress</span> <span class="at">-o</span> 20241227JD1_haploreads</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="pp">*</span>tmp<span class="pp">*</span> <span class="co"># remove not necessary tmp files</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Very well, we now have a synthetic dataset with which we can evaluate bioinfo tools such as variant calling, or even approaches such as genome-wide approaches. We’ll keep the following files:</p>
+<ul>
+<li><p><code>haplo_01.fasta</code> the reference file at <em>AF=0.80</em> and <code>haplo_01_10_4500_variant.fasta</code> the alternative reference at <em>AF=0.20</em>.</p></li>
+<li><p><code>20241227JD1_haploreads_R1.fastq.gz</code>&amp; <code>20241227JD1_haploreads_R2.fastq.gz</code> the Illumina simulated data.</p></li>
+<li><p><code>haplo_01_10-4500.vcf</code> the corresponding VCF file which the differents variations between the two haplotypes.</p></li>
+</ul>
+<p>The dataset includes a number of things to bear in mind when analyzing our simulated data. For example, the fact that the sequences are linear, so we expect falls in coverage at the extremities, or the use of a very small reference. However, this will enable us to use the dataset in pipeline design, whether for unit testing or rough benchmarking.</p>
+</section>
+<section id="what-did-we-learn-in-the-process" class="level2">
+<h2 class="anchored" data-anchor-id="what-did-we-learn-in-the-process">What did we learn in the process?</h2>
+<ul>
+<li>Insert genomic variations into a reference while keeping track of them (VCF &amp; FASTA file).</li>
+<li>Compare two sequences to verify the presence of the introduced variations.</li>
+<li>Simulate illumina data to analyze the synthetic reference.</li>
+</ul>
 <script style="text-align:center" type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="propan2one" data-color="#3b0579" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#ffffff" data-font-color="#ffffff" data-coffee-color="#FFDD00"></script>
 
 
@@ -844,7 +911,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>Copyright 2024, Delmotte Jean</p>
+<p>Copyright 2025, Delmotte Jean</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;

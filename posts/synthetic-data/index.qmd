@@ -2,7 +2,7 @@
 title: "Synthetic data generation"
 author: "Jean DELMOTTE"
 date: "2024-12-27"
-categories: [Bioinformatics, Synthetic, Python]
+categories: [Bioinformatics, Synthetic, Simulation, Python]
 ---
 
 <style>
@@ -43,18 +43,18 @@ git clone git@github.com:propan2one/inSilicoGenome.git
 # 2) create a conda env where all tools work together
 #    in my case, for ease of use, I'm going to use biopython
 conda create -y -p ~/envs/insilicogenome \
-    --channel conda-forge python=3.11.11 biopython 
+    --channel conda-forge python=3.11.11 Poetry
 conda activate ~/envs/insilicogenome
+poetry install
 ```
 
 - Then use python's dedicated functions to create the sequences corresponding to the different haplotypes
 
 ```python
+# In python --------------------------------------------------------------------
 # 3) Import function available in the package
-import sys
-sys.path.append('inSilicoGenome')
-from src.insilicogenome import insilicogenome
-from src.insilicogenome import insilicodata
+from insilicogenome import insilicogenome
+from insilicogenome import insilicodata
 
 # 4) Declare all variables
 size = 5000
@@ -67,14 +67,89 @@ sequence = insilicogenome.random_dnasequence(size)
 insilicogenome.write_fasta_genome(output, sequence, description = '0.8')
 
 # 6) Make a haplotype
-vcf = insilicodata.generate_table_small_variation(output, range_start=range_start, range_end=range_end)
-insilicodata.create_variants(output, vcf, range_start=range_start, range_end=range_end)
+vcf = insilicodata.generate_table_small_variation(output,
+    range_start=range_start, range_end=range_end)
+insilicodata.create_variants(output, vcf, 
+    range_start=range_start, range_end=range_end)
 ```
 
 Once you've created the second haplotype, you should have a new fasta sequence and a pseudo VCF that keeps track of all the variations. So with the `generate_table_small_variation` function you'll have, taking the reference: a small insertion and deletion of one base, an insertion and deletion of 5 bases, 1 SNV and 1 MNV broken down into 5 SNVs making a total of 6 variations.
 
+### Verification of variations present in the two haplotypes
+
+A very quick way to check that all variations are present between the two FASTAs is to use [Needle](https://www.ebi.ac.uk/jdispatcher/psa/emboss_needle) from [EMBOSS](https://www.ebi.ac.uk/jdispatcher/) to perform a pairwise alignment. As you can see, there is 99.6% of identity between the two sequence.
+
+```bash
+# haplo_01	916	.	T	A	45	PASS	1SNP -----------------------------------
+haplo_01         901 ACGCACTATACTTGATAATGGCTGCCGCAGGCGCCGAGCCTTAGGAGTTG    950
+                     |||||||||||||||.||||||||||||||||||||||||||||||||||
+haplo_01_10_4    901 ACGCACTATACTTGAAAATGGCTGCCGCAGGCGCCGAGCCTTAGGAGTTG    950
+
+# haplo_01	1967	.	CG	C	45	PASS	small_DEL
+# haplo_01	1992	.	AAATCT	A	45	PASS	DEL ----------------------------
+haplo_01        1951 TCGCTTTTGCGGTCCGCGAACGTCATCCCCGACCAGGTGGTAAATCTGTC   2000
+                     ||||||||||||||||| ||||||||||||||||||||||||     |||
+haplo_01_10_4   1951 TCGCTTTTGCGGTCCGC-AACGTCATCCCCGACCAGGTGGTA-----GTC   1994
+
+# haplo_01	2925	.	T	TAGTGA	45	PASS	INS ----------------------------
+haplo_01        2901 GGCGAGTTTGTTGGGATATTGATAT-----CCGGACTAGACCCTTAACAC   2945
+                     |||||||||||||||||||||||||     ||||||||||||||||||||
+haplo_01_10_4   2895 GGCGAGTTTGTTGGGATATTGATATAGTGACCGGACTAGACCCTTAACAC   2944
+
+# haplo_01	3123	.	A	AC	45	PASS	small_INS --------------------------
+haplo_01        3096 ATAATTCGTGCCTCGAATATCGCTCGCA-CGCGCGCGTATTCGGGAGCAA   3144
+                     |||||||||||||||||||||||||||| |||||||||||||||||||||
+haplo_01_10_4   3095 ATAATTCGTGCCTCGAATATCGCTCGCACCGCGCGCGTATTCGGGAGCAA   3144
+
+# haplo_01	3977	.	GCAGTT	GGGCCA	45	PASS	5MNP -----------------------
+haplo_01        3945 TCCCTGTTCCCAATTCCAGCACGCCCGTCTTTGCAGTTAGATACCTGATT   3994
+                     |||||||||||||||||||||||||||||||||.....||||||||||||
+haplo_01_10_4   3945 TCCCTGTTCCCAATTCCAGCACGCCCGTCTTTGGGCCAAGATACCTGATT   3994
+```
+
+You'll notice that the MNV is not represented in the same way as in the VCF. In the VCF, it is broken down into 5 SNVs, which is normal.
+
 ### Simulation of Illumina data for both haplotypes
 
-To be continue...
+To generate the illumina sequencing data, I'll use [InSilicoSeq](https://github.com/HadrienG/InSilicoSeq) but other alternative existe, like [art_illumina](https://manpages.debian.org/testing/art-nextgen-simulation-tools/art_illumina.1.en.html) or [wgsim](https://github.com/lh3/wgsim). To mimic the presence of two haplotypes in my dataset, I'll use the relative abundance of the two fasta files previously generated. This way I can ensure that the allelic frequencies of each variation are well defined. This is a simple example, but in theory it's possible to design more complex phenomena by creating multiple haplotypes of the same genome (perhaps we'll explore this later).
+
+```bash 
+# 1) Installation of insilicoseq -----------------------------------------------
+conda create -y -p ~/envs/insilicoseq \
+    --channel bioconda --channel conda-forge insilicoseq biopython \
+    pysam scipy future joblib
+conda create -y -p ~/envs/insilicoseq \
+    --channel conda-forge --channel bioconda insilicoseq=2.0.1
+conda activate ~/envs/insilicoseq
+
+# 2) Generate the abundance file -----------------------------------------------
+cat haplo*.fasta >> haplotypes.fna # Combine the FASTA files
+grep -e ">" haplotypes.fna  | sed "s/>//g" >> abundance.txt
+sed -i "s/_variant/_variant\t0.2/g" abundance.txt # AF of 0.2 for haplotype 2
+sed -i "s/ /\t/g" abundance.txt # Correct the space introduce from 'write_fasta_genome'
+
+# 3) Simulate the reads (125) --------------------------------------------------
+#   Because FASTA is ~5k nt and we want to genrate 50X cov, we want 250k
+#   nucleotides. So it's ~2000 paired reads 
+iss generate --cpus 4 -g haplotypes.fna --abundance_file abundance.txt \
+    -m HiSeq --n_reads 2k --compress -o 20241227JD1_haploreads
+rm *tmp* # remove not necessary tmp files
+```
+
+Very well, we now have a synthetic dataset with which we can evaluate bioinfo tools such as variant calling, or even approaches such as genome-wide approaches. We'll keep the following files:
+
+- `haplo_01.fasta` the reference file at *AF=0.80* and `haplo_01_10_4500_variant.fasta` the alternative reference at *AF=0.20*.
+
+- `20241227JD1_haploreads_R1.fastq.gz` & `20241227JD1_haploreads_R2.fastq.gz` the Illumina paired reads simulated data (length ~125nt).
+
+- `haplo_01_10-4500.vcf` the corresponding VCF file which the differents variations between the two haplotypes.
+
+The dataset includes a number of things to bear in mind when analyzing our simulated data. For example, the fact that the sequences are linear, so we expect falls in coverage at the extremities, or the use of a very small reference. However, this will enable us to use the dataset in pipeline design, whether for unit testing or rough benchmarking.
+
+## What did we learn in the process?
+
+- Insert genomic variations into a reference while keeping track of them (VCF & FASTA file).
+- Compare two sequences to verify the presence of the introduced variations.
+- Simulate illumina data to analyze the synthetic reference.
 
 <script style="text-align:center" type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="propan2one" data-color="#3b0579" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#ffffff" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
