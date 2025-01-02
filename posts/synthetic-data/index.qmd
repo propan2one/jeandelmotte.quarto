@@ -27,13 +27,12 @@ One of the most cost-effective things bioinformatics can do is to simulate givin
 
 :::
 
-In this post, I'll describe how to create a small synthetic genomes, assign mutations to it and simulate mutations at different frequencies. The aim is to create a minimal dataset to facilitate unit testing of my pipelines.
+In this post, I'll describe how to create a small synthetic genomes, assign mutations to it and simulate mutations at a spcific frequencies. The aim is to create a minimal dataset to facilitate unit testing of my pipelines.
 
 ### Creation of a synthetic genomes
 
 There are many ways of doing this. When working on a single model, it's best to start with the genome of interest and introduce mutations. If, on the other hand, you want something completly artificial, you can generate a sequence with a probability of 0.25 for each letter (A, T, C and G). A lot of tools exist, 
-like [random_dna](https://www.bioinformatics.org/sms2/random_dna.html) from Sequence Manipulation Suit, all bioinformatics libraries, makenucseq from [EMBOSS](https://doi.org/10.1016/S0168-9525(00)02024-2).. But a long time ago I made a very basic package [inSilicoGenome](https://github.com/propan2one/inSilicoGenome) which allows you to generate sequences and mutations, I'm going to use it. As this project never came to a conclusion, I'm going to take this opportunity to show you what not to do, while still managing to get the code to work without using the pip command.
-
+like [random_dna](https://www.bioinformatics.org/sms2/random_dna.html) from Sequence Manipulation Suit, all bioinformatics libraries, makenucseq from [EMBOSS](https://doi.org/10.1016/S0168-9525(00)02024-2).. But a long time ago I made a very basic package [inSilicoGenome](https://github.com/propan2one/inSilicoGenome) which allows you to generate simple sequences and mutations, I'm going to use it.
 - Get the code first, install a correct envs in a linux terminal having conda/mamba
 
 ```bash
@@ -73,7 +72,7 @@ insilicodata.create_variants(output, vcf,
     range_start=range_start, range_end=range_end)
 ```
 
-Once you've created the second haplotype, you should have a new fasta sequence and a pseudo VCF that keeps track of all the variations. So with the `generate_table_small_variation` function you'll have, taking the reference: a small insertion and deletion of one base, an insertion and deletion of 5 bases, 1 SNV and 1 MNV broken down into 5 SNVs making a total of 6 variations.
+Once you've created the second [haplotype](https://anvio.org/vocabulary/#haplotype), you should have a new fasta sequence and a pseudo VCF that keeps track of all the variations. So with the `generate_table_small_variation` function you'll have, taking the reference: a small insertion and deletion ([InDel](https://en.wikipedia.org/wiki/Indel)) of one base, an insertion and deletion of 5 bases, 1 [SNV](https://anvio.org/vocabulary/#single-nucleotide-variant-snv) (also called: [SNP](https://en.wikipedia.org/wiki/Single-nucleotide_polymorphism)) and 1 Multi-nucleotide variants (MNVs) decomposed into 5 SNVs making a total of 6 variations.
 
 ### Verification of variations present in the two haplotypes
 
@@ -107,7 +106,7 @@ haplo_01        3945 TCCCTGTTCCCAATTCCAGCACGCCCGTCTTTGCAGTTAGATACCTGATT   3994
 haplo_01_10_4   3945 TCCCTGTTCCCAATTCCAGCACGCCCGTCTTTGGGCCAAGATACCTGATT   3994
 ```
 
-You'll notice that the MNV is not represented in the same way as in the VCF. In the VCF, it is broken down into 5 SNVs, which is normal.
+The variations are taken from the 'VCF' file created by insilicogenome. Here, only the lines presenting the variations have been represented. You'll notice that the **MNV** is not represented in the same way as in the VCF FILE. In the VCF, it's decompose into 5 SNVs, which is normal.
 
 ### Simulation of Illumina data for both haplotypes
 
@@ -115,9 +114,6 @@ To generate the illumina sequencing data, I'll use [InSilicoSeq](https://github.
 
 ```bash 
 # 1) Installation of insilicoseq -----------------------------------------------
-conda create -y -p ~/envs/insilicoseq \
-    --channel bioconda --channel conda-forge insilicoseq biopython \
-    pysam scipy future joblib
 conda create -y -p ~/envs/insilicoseq \
     --channel conda-forge --channel bioconda insilicoseq=2.0.1
 conda activate ~/envs/insilicoseq
