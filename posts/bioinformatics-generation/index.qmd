@@ -104,8 +104,8 @@ Inter-sample analysis -> Automatic downstream analysis
 ```{mermaid}
 graph TD
     A[Start] --> B{ref provided?}
-    B -->|True| C[de novo assembly]
-    B -->|False| D[mapping]
+    B -->|False| C[de novo assembly]
+    B -->|True| D[mapping]
     C --> E[End]
     D --> E[End]
 ```
