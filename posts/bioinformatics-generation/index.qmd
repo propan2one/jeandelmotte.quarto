@@ -2,6 +2,7 @@
 title: "The different generation of bioinformatics analysis"
 author: "Jean DELMOTTE"
 date: "2024-11-21"
+bibliography: references.bib
 categories: [Opinion, Bioinformatics, Workflow managers]
 ---
 
@@ -32,7 +33,7 @@ To fully understand what these modalities refer to, I need to introduce you to t
 
 ### Generation I pipelines
 
-Funnily enough, these different generations can be found throughout a bioinformatician's career. Because I've been doing bioinfo for 7 years I started my journey by using Graphical tools. There are many solutions for processing data using a grapichal user interface, such as [Ugene](https://ugene.net/) a free open-source bioinformatics software, [Geneious prime](https://www.geneious.com/features/prime), [CLC genomics workbench](https://digitalinsights.qiagen.com/products-overview/discovery-insights-portfolio/analysis-and-visualization/qiagen-clc-genomics-workbench/) or even [snapgene](https://www.snapgene.com/).
+Funnily enough, these different generations can be found throughout a bioinformatician's career. Because I've been doing bioinfo for 7 years I started my journey by using Graphical tools. There are many solutions for processing data using a grapichal user interface, such as [Ugene](https://ugene.net/) a free open-source bioinformatics software [@okonechnikov_unipro_2012], [Geneious prime](https://www.geneious.com/features/prime), [CLC genomics workbench](https://digitalinsights.qiagen.com/products-overview/discovery-insights-portfolio/analysis-and-visualization/qiagen-clc-genomics-workbench/) or even [snapgene](https://www.snapgene.com/).
 
 The advantage of this software is that it allows you to quickly understand the data you're working with. This is very important for genomic analyses, for example, where data can be easily trimmed, mapped against a reference or even perform *de novo* assembly. The visualizations of data or results they provide are very interesting. However, for some of them, the algorithms used are black boxes such as trimming or variant calling in CLC. So the main risk, which is also their strength, is that they try to summarize complex parameters in simple values. This type of approach may be sufficient as long as complex cases are not encountered, and pharmaceutical companies love simple answers. Another concern for users is the manual, sequential (one sample at a time) set-up of the analysis. Some software packages allow batch analysis, which is good but not efficient.
 
@@ -58,17 +59,111 @@ What I call *Generation II* (GII) pipelines are everything that comes close to b
 
 :::
 
-Through these GII pipelines, bioinformaticians are free to use all the tools developed by the community or themselves, the only limit being computing power. Then, in the case of a large number of samples, a loop to launch the command line parsing a TSV file retrieving the raw data will do the trick (which is built using good old `ls` of course). All this is feasible and, depending on the need, it's not a bad thing. After all, it's the same manual analysis we do on our servers. I know of production pipelines that are still running with this several years after the last commit, and they're reliable! Just to mention it, using [Galaxy](https://usegalaxy.org/) is a bit of a hybrid between GI & GII, as it provides a wide range of up-to-date tools via its community, the possibility of assembling them into DAGs and automating complex analyses.
+Through these GII pipelines, bioinformaticians are free to use all the tools developed by the community or themselves, the only limit being computing power. Then, in the case of a large number of samples, a loop to launch the command line parsing a TSV file retrieving the raw data will do the trick (which is built using good old `ls` of course). All this is feasible and, depending on the need, it's not a bad thing. After all, it's the same manual analysis we do on our servers. I know of production pipelines that are still running with this several years after the last commit, and they're reliable! Just to mention it, using [Galaxy](https://usegalaxy.org/) [@afgan_galaxy_2018] is a bit of a hybrid between GI & GII, as it provides a wide range of up-to-date tools via its community, the possibility of assembling them into DAGs and automating complex analyses.
 
 The limitation of these generation two pipelines is that *i)* since the analyses are sequential, the computational cost is proportional to the number of samples. *ii)* Often it's a combination of generation II pipeline to make end to end analysis. For example, a pipeline run 'n' times to assemble 'n' genomes, and another pipeline to compare these 'n' genomes. *iii)* Working with several people on these tools can quickly become a nightmare.
 
 ### Generation III
 
-That's where Generation III pipelines come in by using the **W**orkflow **M**anagement **S**ystems (**WfMS**) ([Ahmed et al. 2021](10.1038/s41598-021-99288-8)). From my point of view, it's literally a **language for parallelizing task**. In the case of bioinformatics analysis it's very powerful because you sahre the computing power between samples and process, can trigger several comportement for autoscaling pipeline and more. You're probably familiar with WfMS languages such as [Snakemake](https://snakemake.readthedocs.io/en/stable/), [Nextflow](https://www.nextflow.io/docs/latest/index.html), [CWL](https://www.commonwl.org/), [Airflow](https://airflow.apache.org/) and [WDL](https://openwdl.org/) etc.. 
+That's where Generation III pipelines come in by using the **W**orkflow **M**anagement **S**ystems (**WfMS**) [@ahmed_design_2021]. From my point of view, it's literally a **language for parallelizing task**. The aim is to launch *groups of samples*, and the more samples are launched, the lower the cost per sample. In addition to optimizing the use of computing resources, GIIIs pipelines enable inter-sample analysis to be carried out, resulting in the production of direct downstream analyses. To be able to execute these tasks in parallel *[domain-specific languages](https://en.wikipedia.org/wiki/Domain-specific_language)* (DSLs) must be used (contrary for example to a *general-purpose language* (GPL) like Python). The two most widely used in bioinformatics are [Nextflow](https://www.nextflow.io/docs/latest/index.html) [@ewels_nf-core_2020] and [Snakemake](https://snakemake.readthedocs.io/en/stable/) [@molder_sustainable_2021], but there are many others (notably [CWL](https://www.commonwl.org/), [Airflow](https://airflow.apache.org/) and [WDL](https://openwdl.org/) etc.. ). 
+
+::: columns
+
+::: {.column width="46%"}
+1) **Definition of pipeline logic based on modular process declarations** (DAG?). 
+
+This makes the code more readable and maintainable.
+:::
+
+::: {.column width="4%"}
+:::
+
+::: {.column width="46%"}
+2) **Aggregate multiple samples**
+
+Inter-sample analysis -> Automatic downstream analysis
+:::
+
+:::
+
+
+
+::: columns
+
+::: {.column width="46%"}
+3) **Data driven execution based**
+
+Ref or without ref (scenario?)
+:::
+
+::: {.column width="4%"}
+:::
+
+::: {.column width="46%"}
+4) **Conditional execution based on data re-evaluation**
+
+Checkpoint
+:::
+
+:::
+
+
+
+
+::: columns
+
+
+::: {.column width="46%"}
+5) **Combinatorial execution**
+
+Multiple tools in parallele
+:::
+
+::: {.column width="4%"}
+:::
+
+::: {.column width="46%"}
+6) **Cloud and High-Performance Computing (HPC) clusters compliance**
+
+Scalability and Automation
+:::
+
+:::
+
+
+
+::: columns
+::: {.column width="46%"}
+7) **Integration for package managers & containerization platforms**
+
+portability with Conda, Docker, singularity
+:::
+
+::: {.column width="4%"}
+:::
+
+::: {.column width="46%"}
+8) **Continuous integration testing and code-quality lint tests**
+
+Template?
+:::
+
+:::
+
+
 
 
 When coupled with a launch interface ([ShinyApp](https://www.shinyapps.io/), [Streamlit](https://streamlit.io/) or even better an [EPAM Cloud Pipeline](https://lifescience.opensource.epam.com/cloud/) infra) and an academic or cloud server, it allows you to run all available bioinfo tools.
 
+. In the case of bioinformatics analysis it's very powerful because you share the computing power between samples and process, can trigger several comportement for autoscaling pipeline and more. 
+
+Later on in this blog, I hope to show you how the different features of each of these WfMS languages are coded, so that you can compare them.
+
 To be continue...
+
+### References
+
+::: {#refs}
+:::
 
 <script style="text-align:center" type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="propan2one" data-color="#3b0579" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#ffffff" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
