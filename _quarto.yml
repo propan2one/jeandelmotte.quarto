@@ -5,7 +5,6 @@ project:
 website:
   title: "Jean Delmotte"
   site-url : "https://jeandelmotte.com"
-  site-path: '/'
   favicon: logo.png
   page-navigation: true
   navbar:
