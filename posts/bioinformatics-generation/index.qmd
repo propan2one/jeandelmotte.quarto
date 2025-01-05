@@ -65,7 +65,7 @@ The limitation of these generation two pipelines is that *i)* since the analyses
 
 ### Generation III
 
-That's where Generation III pipelines come in by using the **W**orkflow **M**anagement **S**ystems (**WfMS**) [@ahmed_design_2021]. From my point of view, it's literally a **language for parallelizing task**. The aim is to launch *groups of samples*, and the more samples are launched, the lower the cost per sample. In addition to optimizing the use of computing resources, GIIIs pipelines enable inter-sample analysis to be carried out, resulting in the production of direct downstream analyses. To be able to execute these tasks in parallel *[domain-specific languages](https://en.wikipedia.org/wiki/Domain-specific_language)* (DSLs) must be used (contrary for example to a *general-purpose language* (GPL) like Python). The two most widely used in bioinformatics are [Nextflow](https://www.nextflow.io/docs/latest/index.html) [@ewels_nf-core_2020] and [Snakemake](https://snakemake.readthedocs.io/en/stable/) [@molder_sustainable_2021], but there are many others (notably [CWL](https://www.commonwl.org/), [Airflow](https://airflow.apache.org/) and [WDL](https://openwdl.org/) etc.. ). 
+That's where Generation III pipelines come in by using the **W**orkflow **M**anagement **S**ystems (**WfMS**) [@ahmed_design_2021]. From my point of view, it's literally a **language for parallelizing task**. The aim is to launch *groups of samples*, and the more samples are launched, the lower the cost per sample. In addition to optimizing the use of computing resources, GIIIs pipelines enable inter-sample analysis to be carried out, resulting in the production of direct downstream analyses. To be able to execute these tasks in parallel *[domain-specific languages](https://en.wikipedia.org/wiki/Domain-specific_language)* (DSLs) must be used[^1]. The two most widely used in bioinformatics are [Nextflow](https://www.nextflow.io/docs/latest/index.html) [@ewels_nf-core_2020] and [Snakemake](https://snakemake.readthedocs.io/en/stable/) [@molder_sustainable_2021], but there are many others (notably [CWL](https://www.commonwl.org/), [Airflow](https://airflow.apache.org/) and [WDL](https://openwdl.org/) etc.. ). 
 
 ::: columns
 
@@ -161,9 +161,15 @@ Later on in this blog, I hope to show you how the different features of each of 
 
 To be continue...
 
+### Generation VI
+
 ### References
 
 ::: {#refs}
 :::
 
+___
+
 <script style="text-align:center" type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="propan2one" data-color="#3b0579" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#ffffff" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
+
+[^1]: Contrary for example to a *general-purpose language* (GPL) like Python.
