@@ -91,6 +91,9 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -253,6 +256,22 @@ text-align: justify}
 <ol start="2" type="1">
 <li><strong>Aggregate multiple samples</strong></li>
 </ol>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+  A(Sample1) --&gt; D{Aggregation}
+  B(Sample2) --&gt; D
+  C(Sample3) --&gt; D
+  D--&gt; E[sample comparison]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 <p>Inter-sample analysis -&gt; Automatic downstream analysis</p>
 </div>
 </div>
@@ -261,6 +280,23 @@ text-align: justify}
 <ol start="3" type="1">
 <li><strong>Data driven execution based</strong></li>
 </ol>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A[Start] --&gt; B{ref provided?}
+    B --&gt;|True| C[de novo assembly]
+    B --&gt;|False| D[mapping]
+    C --&gt; E[End]
+    D --&gt; E[End]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 <p>Ref or without ref (scenario?)</p>
 </div><div class="column" style="width:4%;">
 
@@ -268,6 +304,25 @@ text-align: justify}
 <ol start="4" type="1">
 <li><strong>Conditional execution based on data re-evaluation</strong></li>
 </ol>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A[Start] --&gt; B[Evaluate Data]
+    B --&gt; C{Condition Met?}
+    C --&gt;|Yes| D[Execute Action 1]
+    C --&gt;|No| E[Re-evaluate Data]
+    E --&gt; B
+    D --&gt; F[End]
+    E --&gt; F[End]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 <p>Checkpoint</p>
 </div>
 </div>
@@ -277,6 +332,21 @@ text-align: justify}
 <li><strong>Combinatorial execution</strong></li>
 </ol>
 <p>Multiple tools in parallele</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+  A(tool1) --&gt; D{results}
+  B(tool2) --&gt; D
+  C(tool3) --&gt; D
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </div><div class="column" style="width:4%;">
 
 </div><div class="column" style="width:46%;">

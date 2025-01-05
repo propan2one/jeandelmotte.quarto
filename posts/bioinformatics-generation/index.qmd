@@ -81,6 +81,14 @@ This makes the code more readable and maintainable.
 ::: {.column width="46%"}
 2) **Aggregate multiple samples**
 
+```{mermaid}
+flowchart TD
+  A(Sample1) --> D{Aggregation}
+  B(Sample2) --> D
+  C(Sample3) --> D
+  D--> E[sample comparison]
+```
+
 Inter-sample analysis -> Automatic downstream analysis
 :::
 
@@ -93,6 +101,15 @@ Inter-sample analysis -> Automatic downstream analysis
 ::: {.column width="46%"}
 3) **Data driven execution based**
 
+```{mermaid}
+graph TD
+    A[Start] --> B{ref provided?}
+    B -->|True| C[de novo assembly]
+    B -->|False| D[mapping]
+    C --> E[End]
+    D --> E[End]
+```
+
 Ref or without ref (scenario?)
 :::
 
@@ -101,6 +118,17 @@ Ref or without ref (scenario?)
 
 ::: {.column width="46%"}
 4) **Conditional execution based on data re-evaluation**
+
+```{mermaid}
+graph TD
+    A[Start] --> B[Evaluate Data]
+    B --> C{Condition Met?}
+    C -->|Yes| D[Execute Action 1]
+    C -->|No| E[Re-evaluate Data]
+    E --> B
+    D --> F[End]
+    E --> F[End]
+```
 
 Checkpoint
 :::
@@ -117,6 +145,14 @@ Checkpoint
 5) **Combinatorial execution**
 
 Multiple tools in parallele
+
+```{mermaid}
+flowchart TD
+  A(tool1) --> D{results}
+  B(tool2) --> D
+  C(tool3) --> D
+```
+
 :::
 
 ::: {.column width="4%"}
