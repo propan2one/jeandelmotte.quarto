@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -91,9 +125,6 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
-<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -212,172 +243,147 @@ text-align: justify}
 </div><div class="column" style="width:2%;">
 
 </div><div class="column" style="width:60%;">
-<p>Today, the volume of data to be analysed in bioinformatics is such that it’s essential to use a number of tools to produce results in a consistent timeframe. However, these advances are not always used, so let’s take a look back at the history of analysis methods over the last 10 years.</p>
+<p>Today, the volume of data to be analysed in bioinformatics is such that it’s essential to use a number of tools to produce results in a consistent timeframe. However, these advances are not always used, so let’s take a look back at the history of analysis methods over the last 10 years. To fully understand what these modalities refer to, I need to introduce you to the notion that I call the different <strong>pipeline generations</strong>. Of course, defined limits are not so clearly defined, and often generations of tools coexist within a lab or organization.</p>
 </div>
 </div>
-<p>To fully understand what these modalities refer to, I need to introduce you to the notion that I call the different <strong>generations</strong>, often speaking of the generation I, II or III pipeline (abbreviated as GI, GII etc..). Of course, defined limits are not so clearly defined, and often generations of tools coexist within a lab or organization. I’ll now describe what I consider to be the different generations, and then conclude by explaining the advantages of such a category. If you’re a bioinformatician, you can go straight to the GII pipeline.</p>
+<p>I’ll now describe what I consider to be the different generations, and then conclude by explaining the advantages of such a category.</p>
 <section id="generation-i-pipelines" class="level3">
 <h3 class="anchored" data-anchor-id="generation-i-pipelines">Generation I pipelines</h3>
-<p>Funnily enough, these different generations can be found throughout a bioinformatician’s career. Because I’ve been doing bioinfo for 7 years I started my journey by using Graphical tools. There are many solutions for processing data using a grapichal user interface, such as <a href="https://ugene.net/">Ugene</a> a free open-source bioinformatics software <span class="citation" data-cites="okonechnikov_unipro_2012">(<a href="#ref-okonechnikov_unipro_2012" role="doc-biblioref">Okonechnikov et al. 2012</a>)</span>, <a href="https://www.geneious.com/features/prime">Geneious prime</a>, <a href="https://digitalinsights.qiagen.com/products-overview/discovery-insights-portfolio/analysis-and-visualization/qiagen-clc-genomics-workbench/">CLC genomics workbench</a> or even <a href="https://www.snapgene.com/">snapgene</a>.</p>
-<p>The advantage of this software is that it allows you to quickly understand the data you’re working with. This is very important for genomic analyses, for example, where data can be easily trimmed, mapped against a reference or even perform <em>de novo</em> assembly. The visualizations of data or results they provide are very interesting. However, for some of them, the algorithms used are black boxes such as trimming or variant calling in CLC. So the main risk, which is also their strength, is that they try to summarize complex parameters in simple values. This type of approach may be sufficient as long as complex cases are not encountered, and pharmaceutical companies love simple answers. Another concern for users is the manual, sequential (one sample at a time) set-up of the analysis. Some software packages allow batch analysis, which is good but not efficient.</p>
-<p>Together, <em>Generation I</em> (GI) tools/pipelines are sufficient for small datasets, often for use by biologists. They are used routinely, with a very simple workflow. Bioinformaticians employing them can use them to visualize data or decrease the workload by training biologists. Sometimes by coding a small part on the side (merging VCFs etc.).</p>
+<p>Funnily enough, these different generations can be found throughout a bioinformatician’s career. Because I’ve been doing bioinfo for 7 years I started my journey by using graphical tools, it’s through these tools that we use generation I (gI) pipelines. There are many solutions for processing data using a grapichal user interface, such as <a href="https://ugene.net/">Ugene</a> a free open-source bioinformatics software <span class="citation" data-cites="okonechnikov_unipro_2012">(<a href="#ref-okonechnikov_unipro_2012" role="doc-biblioref">Okonechnikov et al. 2012</a>)</span>, <a href="https://www.geneious.com/features/prime">Geneious prime</a>, <a href="https://digitalinsights.qiagen.com/products-overview/discovery-insights-portfolio/analysis-and-visualization/qiagen-clc-genomics-workbench/">CLC genomics workbench</a> or even <a href="https://www.snapgene.com/">snapgene</a>.</p>
+<p>The advantage of this software is that it allows you to quickly view and understand the data you’re working with. This is very important for genomic analyses, for example, where data can be easily trimmed, mapped against a reference or even perform <em>de novo</em> assembly. Visualization of data or results is a must for solving bioinformatics problems, and it’s an essential part of any bioinformatics solution. In fact, young bioinformaticians often fail to check their results by visualizing raw data, because they are too confident in their code.So the tools used in gI are super-useful, but for some of them, the algorithms used are black boxes such as trimming or variant calling in CLC. So the main risk, which is also their strength, is that they try to summarize complex parameters in simple values. This type of approach may be sufficient as long as complex cases are not encountered, and pharmaceutical companies love simple answers. Another concern for users is the manual, sequential (one sample at a time) set-up of the analysis this is not a real problem when you have a throughput of 10s of samples per month. Just to mention it, using <a href="https://usegalaxy.org/">Galaxy</a> <span class="citation" data-cites="afgan_galaxy_2018">(<a href="#ref-afgan_galaxy_2018" role="doc-biblioref">Afgan et al. 2018</a>)</span> is a bit of a hybrid between gI &amp; gII, as it provides a wide range of up-to-date tools via its community, the possibility of assembling them into DAGs and automating complex analyses using user interface.</p>
+<p>Together, <em>Generation I</em> (gI) tools/pipelines are sufficient for small datasets, often for use by biologists. They are used routinely, with a very simple workflow. Bioinformaticians employing them can visualize data or decrease the workload by training biologists. Sometimes, additional scripts can improve throughput (merging VCFs etc..), and tertiary analyses to aggregate data are relevant using notebooks (<a href="https://rmarkdown.rstudio.com/">Rmarkdown</a>, <a href="https://quarto.org/">quarto</a> or <a href="https://jupyter.org/">jupyter notebook</a>).</p>
 </section>
 <section id="generation-ii-pipelines" class="level3">
 <h3 class="anchored" data-anchor-id="generation-ii-pipelines">Generation II pipelines</h3>
 <div class="columns">
 <div class="column" style="width:65%;">
-<p>What I call <em>Generation II</em> (GII) pipelines are everything that comes close to bash-coded pipelines. When coupled with a launch interface and an academic or cloud server, it allows you to run all available bioinfo tools. We’re not going to lie, we’ve all done it, it’s ugly, but it works and sometimes it allows you to go fast (for a POC or whatever). Sometimes it’s an analysis in Python or R, but the idea remains the same: it’s a script (often monolithic) that chains together the analysis tools (Fig.1.). You’ll often find conda environment calls directly in the code or singularity image to manage the bioinformatics sofware. Most of the time, it’s the bioinformatician who developed it who launches it for his analyses, but sometimes with the use of an app (a feature of GIII) allows the pipeline to be transmitted to several users, including biologists. Here the constraint is to provide the user with a consistent interface (asking the user to modify a YAML can sometimes be problematic for the user).</p>
+<p>What I call <em>Generation II</em> (gII) pipelines are everything that comes close to “<em>bash-coded</em>” pipelines. Sometimes It could be a script in Python or R, but the idea remains the same: it’s a script (often monolithic) that chains together the analysis tools. In the best cases, these pipelines are integrated with a <a href="https://en.wikipedia.org/wiki/Job_scheduler">Job scheduler</a> with grid engine like <a href="https://slurm.schedmd.com/">Slurm</a>, <a href="https://en.wikipedia.org/wiki/Oracle_Grid_Engine">SGE</a> or others. It works and sometimes it allows you to go fast (<em>e.g.</em> for a POC), but we’re not going to lie, we’ve all done it, it’s not very elegant. For exemple you’ll often find conda environment calls directly in the code or singularity image to manage the bioinformatics sofware. Most of the time, it’s the bioinformatician who developed it who launches it for his analyses, but sometimes with the use of an app (a feature of gIII) allows the pipeline to be transmitted to several users, including biologists. Here the constraint is to provide the user with a consistent interface (asking the user to modify a YAML can sometimes be problematic for the user).</p>
 </div><div class="column" style="width:5%;">
 
 </div><div class="column" style="width:30%;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="GII_pipeline_example.png" class="img-fluid figure-img"></p>
+<p><img src="gII_pipeline_example.png" class="img-fluid figure-img"></p>
 <figcaption>Fig.1. One script to rule them all</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Through these GII pipelines, bioinformaticians are free to use all the tools developed by the community or themselves, the only limit being computing power. Then, in the case of a large number of samples, a loop to launch the command line parsing a TSV file retrieving the raw data will do the trick (which is built using good old <code>ls</code> of course). All this is feasible and, depending on the need, it’s not a bad thing. After all, it’s the same manual analysis we do on our servers. I know of production pipelines that are still running with this several years after the last commit, and they’re reliable! Just to mention it, using <a href="https://usegalaxy.org/">Galaxy</a> <span class="citation" data-cites="afgan_galaxy_2018">(<a href="#ref-afgan_galaxy_2018" role="doc-biblioref">Afgan et al. 2018</a>)</span> is a bit of a hybrid between GI &amp; GII, as it provides a wide range of up-to-date tools via its community, the possibility of assembling them into DAGs and automating complex analyses.</p>
-<p>The limitation of these generation two pipelines is that <em>i)</em> since the analyses are sequential, the computational cost is proportional to the number of samples. <em>ii)</em> Often it’s a combination of generation II pipeline to make end to end analysis. For example, a pipeline run ‘n’ times to assemble ‘n’ genomes, and another pipeline to compare these ‘n’ genomes. <em>iii)</em> Working with several people on these tools can quickly become a nightmare.</p>
+<p>Through these gII pipelines, bioinformaticians are free to use all the tools developed by the community or themselves, the only limit being computing power. Then, in the case of a large number of samples, a loop to launch the command line parsing a TSV file retrieving the raw data will do the trick (which is built using good old <code>ls</code> of course).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Please don't make the same mistakes I did</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">read</span> <span class="va">h</span> <span class="va">f</span><span class="kw">;</span> <span class="cf">do</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">r1</span><span class="op">=</span><span class="kw">`</span><span class="fu">ls</span> <span class="va">$RAW</span>/data/rna-sequence-raw/<span class="pp">*</span>_<span class="va">${h}</span>_R1.fastq.gz<span class="kw">`;</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="va">r2</span><span class="op">=</span><span class="kw">`</span><span class="fu">ls</span> <span class="va">$RAW</span>/data/rna-sequence-raw/<span class="pp">*</span>_<span class="va">${h}</span>_R2.fastq.gz<span class="kw">`;</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">qsub</span> <span class="at">-v</span> <span class="st">"id=</span><span class="va">${f}</span><span class="st">,reads1=</span><span class="va">${r1}</span><span class="st">,reads2=</span><span class="va">${r2}</span><span class="st">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">    path=</span><span class="va">$SCRATCH</span><span class="st">/Rarefaction/,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">    gffFile=</span><span class="va">$WORKSPACE</span><span class="st">/OsHV-1_strain_microVar_variant_A.gff3"</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> <span class="ex">~/script_to_rule_them_all.pbs</span><span class="kw">;</span> <span class="cf">done</span> <span class="op">&lt;</span> <span class="va">$configuration</span>/all_my_runs.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>All this is feasible and, depending on the need, it’s not a bad thing (but most of the time it is). After all, it’s the same manual analysis we do on our servers. I know of production pipelines that are still running with this several years after the last commit, and they’re reliable!</p>
+<p>Together <em>Generation II</em> (gII) pipelines are perfectly suited to a throughput of 50s or so samples per month in a team of one or two bioinformaticians working closely together. However, they have several limitations <em>i)</em> since the analyses are sequential, the computational cost is proportional to the number of samples. <em>ii)</em> Often it’s a combination of generation II pipeline to make end to end analysis. For example, a pipeline run ‘n’ times to assemble ‘n’ genomes, and another pipeline to compare these ‘n’ genomes. <em>iii)</em> Working with several people on these tools can quickly become a nightmare because it’s not easy to run unit tests on the various components.</p>
 </section>
-<section id="generation-iii" class="level3">
-<h3 class="anchored" data-anchor-id="generation-iii">Generation III</h3>
-<p>That’s where Generation III pipelines come in by using the <strong>W</strong>orkflow <strong>M</strong>anagement <strong>S</strong>ystems (<strong>WfMS</strong>) <span class="citation" data-cites="ahmed_design_2021">(<a href="#ref-ahmed_design_2021" role="doc-biblioref">Ahmed et al. 2021</a>)</span>. From my point of view, it’s literally a <strong>language for parallelizing task</strong>. The aim is to launch <em>groups of samples</em>, and the more samples are launched, the lower the cost per sample. In addition to optimizing the use of computing resources, GIIIs pipelines enable inter-sample analysis to be carried out, resulting in the production of direct downstream analyses. To be able to execute these tasks in parallel <em><a href="https://en.wikipedia.org/wiki/Domain-specific_language">domain-specific languages</a></em> (DSLs) must be used<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. The two most widely used in bioinformatics are <a href="https://www.nextflow.io/docs/latest/index.html">Nextflow</a> <span class="citation" data-cites="ewels_nf-core_2020">(<a href="#ref-ewels_nf-core_2020" role="doc-biblioref">Ewels et al. 2020</a>)</span> and <a href="https://snakemake.readthedocs.io/en/stable/">Snakemake</a> <span class="citation" data-cites="molder_sustainable_2021">(<a href="#ref-molder_sustainable_2021" role="doc-biblioref">Mölder et al. 2021</a>)</span>, but there are many others (notably <a href="https://www.commonwl.org/">CWL</a>, <a href="https://airflow.apache.org/">Airflow</a> and <a href="https://openwdl.org/">WDL</a> etc.. ).</p>
-<div class="columns">
-<div class="column" style="width:46%;">
-<ol type="1">
-<li><strong>Definition of pipeline logic based on modular process declarations</strong> (DAG?).</li>
-</ol>
-<p>This makes the code more readable and maintainable.</p>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:46%;">
-<ol start="2" type="1">
-<li><strong>Aggregate multiple samples</strong></li>
-</ol>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-  A(Sample1) --&gt; D{Aggregation}
-  B(Sample2) --&gt; D
-  C(Sample3) --&gt; D
-  D--&gt; E[sample comparison]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p>Inter-sample analysis -&gt; Automatic downstream analysis</p>
-</div>
-</div>
-<div class="columns">
-<div class="column" style="width:46%;">
-<ol start="3" type="1">
-<li><strong>Data driven execution based</strong></li>
-</ol>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph TD
-    A[Start] --&gt; B{ref provided?}
-    B --&gt;|False| C[de novo assembly]
-    B --&gt;|True| D[mapping]
-    C --&gt; E[End]
-    D --&gt; E[End]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p>Ref or without ref (scenario?)</p>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:46%;">
-<ol start="4" type="1">
-<li><strong>Conditional execution based on data re-evaluation</strong></li>
-</ol>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph TD
-    A[Start] --&gt; B[Evaluate Data]
-    B --&gt; C{Condition Met?}
-    C --&gt;|Yes| D[Execute Action 1]
-    C --&gt;|No| E[Re-evaluate Data]
-    E --&gt; B
-    D --&gt; F[End]
-    E --&gt; F[End]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p>Checkpoint</p>
-</div>
-</div>
-<div class="columns">
-<div class="column" style="width:46%;">
-<ol start="5" type="1">
-<li><strong>Combinatorial execution</strong></li>
-</ol>
-<p>Multiple tools in parallele</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-  A(tool1) --&gt; D{results}
-  B(tool2) --&gt; D
-  C(tool3) --&gt; D
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:46%;">
-<ol start="6" type="1">
-<li><strong>Cloud and High-Performance Computing (HPC) clusters compliance</strong></li>
-</ol>
-<p>Scalability and Automation</p>
-</div>
-</div>
-<div class="columns">
-<div class="column" style="width:46%;">
-<ol start="7" type="1">
-<li><strong>Integration for package managers &amp; containerization platforms</strong></li>
-</ol>
-<p>portability with Conda, Docker, singularity</p>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:46%;">
-<ol start="8" type="1">
-<li><strong>Continuous integration testing and code-quality lint tests</strong></li>
-</ol>
-<p>Template?</p>
-</div>
-</div>
-<p>When coupled with a launch interface (<a href="https://www.shinyapps.io/">ShinyApp</a>, <a href="https://streamlit.io/">Streamlit</a> or even better an <a href="https://lifescience.opensource.epam.com/cloud/">EPAM Cloud Pipeline</a> infra) and an academic or cloud server, it allows you to run all available bioinfo tools.</p>
-<p>. In the case of bioinformatics analysis it’s very powerful because you share the computing power between samples and process, can trigger several comportement for autoscaling pipeline and more.</p>
-<p>Later on in this blog, I hope to show you how the different features of each of these WfMS languages are coded, so that you can compare them.</p>
-<p>To be continue…</p>
+<section id="generation-iii-pipelines" class="level3">
+<h3 class="anchored" data-anchor-id="generation-iii-pipelines">Generation III pipelines</h3>
+<p>That’s where <em>Generation III</em> (gIII) pipelines come in by using the <strong>W</strong>orkflow <strong>M</strong>anagement <strong>S</strong>ystems (<strong>WfMS</strong>) <span class="citation" data-cites="ahmed_design_2021">(<a href="#ref-ahmed_design_2021" role="doc-biblioref">Ahmed et al. 2021</a>)</span>. From my point of view, it’s literally a <strong>language for parallelizing task</strong>. The aim is to launch <em>groups of samples</em>, and the more samples are launched, the lower the cost per sample. In addition to optimizing the use of computing resources, gIIIs pipelines enable inter-sample analysis to be carried out, resulting in the production of direct downstream analyses. To be able to execute these tasks in parallel <em><a href="https://en.wikipedia.org/wiki/Domain-specific_language">domain-specific languages</a></em> (DSLs) must be used<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. The two most widely used in bioinformatics are <a href="https://www.nextflow.io/docs/latest/index.html">Nextflow</a> <span class="citation" data-cites="ewels_nf-core_2020">(<a href="#ref-ewels_nf-core_2020" role="doc-biblioref">Ewels et al. 2020</a>)</span> and <a href="https://snakemake.readthedocs.io/en/stable/">Snakemake</a> <span class="citation" data-cites="molder_sustainable_2021">(<a href="#ref-molder_sustainable_2021" role="doc-biblioref">Mölder et al. 2021</a>)</span>, but there are many others (notably <a href="https://www.commonwl.org/">CWL</a>, <a href="https://airflow.apache.org/">Airflow</a> and <a href="https://openwdl.org/">WDL</a> etc.. ). To define that a workflow corresponds to the gIII pipeline standard, it must contain at least these 8 attributes: <em>i)</em> Definition of pipeline logic based on modular process declarations. <em>ii)</em> Aggregate multiple samples. <em>iii)</em> Data driven execution based. <em>iv)</em> Conditional execution based on data re-evaluation. <em>v)</em> Combinatorial execution. <em>vi)</em> Cloud and High-Performance Computing (HPC) clusters compliance. <em>vii)</em> Integration for package managers &amp; containerization platforms. <em>viii)</em> Continuous integration testing and code-quality lint tests.</p>
+<p>A quick note is that if you’ve reached this level of professionalism in your pipeline development, it’s likely that your team has developed a launch application dedicated to your infrastructure. Indeed, several solutions exist, such as <a href="https://flask.palletsprojects.com/en/stable/">Flask</a>, <a href="https://www.shinyapps.io/">ShinyApp</a>, <a href="https://streamlit.io/">Streamlit</a> or an <a href="https://lifescience.opensource.epam.com/cloud/">EPAM Cloud Pipeline</a>. Finally, with a distributed approach to package the code (e.g.&nbsp;tertiary analysis carried out), it’s worth pointing out that the launch application can also be used to aggregate results for biologist users, which is often much appreciated.</p>
+<p>Overall, <em>Generation III</em> (gIII) pipelines are difficult for a team to build, they are sometimes closer to the job of software engineer than bioinformatician<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. The development and maintenance of the pipeline is seen differently, and approaches such as <a href="https://en.wikipedia.org/wiki/Test-driven_development">test-driven development</a> (<em>TDD</em>) and <a href="https://en.wikipedia.org/wiki/Agile_software_development">agile software develement</a> can be considered and avoids <a href="https://en.wikipedia.org/wiki/Technical_debt">technical debt</a> making it easier to implement changes. Moreover, the advantage is that you can achieve a <strong>very high analysis throughput</strong>, and do so reliably, only the computing ressources are the limite, not the number of samples. Also, it will be easier to maintained the pipeline and make it evolved because its interoperability with different changes will be simplified. This type of project is appropriate for a department and/or a team of bioinformaticians. Particularly in the pharmaceutical industry, it should be a necessary standard for achieving <a href="https://en.wikipedia.org/wiki/Good_manufacturing_practice">GMPs</a> based analysis.</p>
 </section>
-<section id="generation-vi" class="level3">
-<h3 class="anchored" data-anchor-id="generation-vi">Generation VI</h3>
+<section id="generation-vi-pipelines" class="level3">
+<h3 class="anchored" data-anchor-id="generation-vi-pipelines">Generation VI pipelines</h3>
+<p>The main difference with the previous generation is the modularity brought by <em>Generation VI</em> (GVI). All of the above components are present, but the way in which workflow sub-sections are coded and tested is independent of the pipeline. This independence is important in cases where it is not a single pipeline but a combination of pipelines that is maintained. Indeed, if we take the mapping part, a module containing all the tools and which can be easily parameterized can be distributed in a guided assembly pipeline, another for RNAseq etc.. Achieving this modularity makes development cycles within a department very short. This brings us closer to the ease of connection of a gI DAG, while retaining the robustness of a gIII. The use of internal dependency via packages that can bring the same code base is also a major asset for a bioinformatics department.</p>
+</section>
+<section id="conclusions" class="level3">
+<h3 class="anchored" data-anchor-id="conclusions">Conclusions</h3>
+<p>There are some very important questions to ask when developing a bioinformatics pipeline. The first and most important is whether we want a long-term solution or not. Then there are the following questions: what is the sample throughput to be processed, do I have the infrastructure for a scale-up, how close are the teams of biologists with the developers, how many developers am I prepared to put into the development, and should a single pipeline be developed in the end? Depending on the answers, some pipeline generations are more appropriate than others. Indeed, a bioinformatics department of several people producing data for drug submissions and operating at different sites around the world will not have the same constraints as a research project with a post-doc position specializing in genome-wide data analysis in a laboratory of people working to establish a single T2T genome of a well-defined organism. Sometimes the bazooka to crush the ant is not ideal, but bioinformaticians would benefit from knowing the evolution of these 4 generations and communicating on well-established terms. This is why I present the term pipeline generation with the associated nuances, because I know that not everything is so compartmentalized. My feeling is that the field is still new, and many prerequisites are underestimated by our wet-labs users. The table below attempts to summarize the various properties related to the different pipeline generations.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 83%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 5%">
+<col style="width: 3%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Properties</th>
+<th style="text-align: left;">gI</th>
+<th style="text-align: left;">gII</th>
+<th style="text-align: left;">gIII</th>
+<th style="text-align: left;">gIV</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Requires a small team (1/2 bioinformaticians)</td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Simple user interface (GUI)</td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">x</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Definition of pipeline logic based on modular process declarations</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;">x</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Automatics aggregate multiple samples</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;">x</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Data driven execution based</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;">x</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Conditional execution based on data re-evaluation</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;">x</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Combinatorial execution</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;">x</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cloud and High-Performance Computing (HPC) clusters compliance</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;">x</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Integration for package managers &amp; containerization platforms</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;">x</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Continuous integration testing and code-quality lint tests</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;">x</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="references" class="level3">
 <h3 class="anchored" data-anchor-id="references">References</h3>
@@ -409,6 +415,7 @@ Okonechnikov, Konstantin, Olga Golosova, Mikhail Fursov, and the UGENE team. 201
 
 <ol>
 <li id="fn1"><p>Contrary for example to a <em>general-purpose language</em> (GPL) like Python.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Especially if there are no DevOps teams to support them.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{delmotte2024,
   author = {DELMOTTE, Jean},

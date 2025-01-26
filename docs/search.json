@@ -53,13 +53,13 @@
     "href": "posts/bioinformatics-generation/index.html",
     "title": "The different generation of bioinformatics analysis",
     "section": "",
-    "text": "Today, the volume of data to be analysed in bioinformatics is such that it’s essential to use a number of tools to produce results in a consistent timeframe. However, these advances are not always used, so let’s take a look back at the history of analysis methods over the last 10 years.\nTo fully understand what these modalities refer to, I need to introduce you to the notion that I call the different generations, often speaking of the generation I, II or III pipeline (abbreviated as GI, GII etc..). Of course, defined limits are not so clearly defined, and often generations of tools coexist within a lab or organization. I’ll now describe what I consider to be the different generations, and then conclude by explaining the advantages of such a category. If you’re a bioinformatician, you can go straight to the GII pipeline."
+    "text": "Today, the volume of data to be analysed in bioinformatics is such that it’s essential to use a number of tools to produce results in a consistent timeframe. However, these advances are not always used, so let’s take a look back at the history of analysis methods over the last 10 years. To fully understand what these modalities refer to, I need to introduce you to the notion that I call the different pipeline generations. Of course, defined limits are not so clearly defined, and often generations of tools coexist within a lab or organization.\nI’ll now describe what I consider to be the different generations, and then conclude by explaining the advantages of such a category."
   },
   {
     "objectID": "posts/bioinformatics-generation/index.html#footnotes",
     "href": "posts/bioinformatics-generation/index.html#footnotes",
     "title": "The different generation of bioinformatics analysis",
     "section": "Footnotes",
-    "text": "Footnotes\n\n\nContrary for example to a general-purpose language (GPL) like Python.↩︎"
+    "text": "Footnotes\n\n\nContrary for example to a general-purpose language (GPL) like Python.↩︎\nEspecially if there are no DevOps teams to support them.↩︎"
   }
 ]
