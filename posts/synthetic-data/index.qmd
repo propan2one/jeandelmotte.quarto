@@ -138,7 +138,7 @@ Very well, we now have a synthetic dataset with which we can evaluate bioinfo to
 
 - `20241227JD1_haploreads_R1.fastq.gz` & `20241227JD1_haploreads_R2.fastq.gz` the Illumina paired reads simulated data (length ~125nt).
 
-- `haplo_01_10-4500.vcf` the corresponding VCF file which the differents variations between the two haplotypes.
+- `haplo_01_10-4500.vcf` the corresponding VCF file with the differents variations between the two haplotypes.
 
 The dataset includes a number of things to bear in mind when analyzing our simulated data. For example, the fact that the sequences are linear, so we expect falls in coverage at the extremities, or the use of a very small reference. However, this will enable us to use the dataset in pipeline design, whether for unit testing or rough benchmarking.
 
