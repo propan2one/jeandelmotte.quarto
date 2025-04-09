@@ -11,6 +11,8 @@ website:
   navbar:
     search: true
     right:
+      - text: "![](/assets/img/codeberg-logo_icon_white.svg)"
+        href: https://codeberg.org/JeanDelmotte
       - icon: github
         href: https://github.com/propan2one
       - icon: twitter
@@ -29,6 +31,8 @@ website:
   page-footer: 
     left: "Copyright 2025, Delmotte Jean"
     right: 
+      - text: "![](/assets/img/codeberg-logo_icon_white.svg)"
+        href: https://codeberg.org/JeanDelmotte
       - icon: github
         href: https://github.com/propan2one
       - icon: twitter
